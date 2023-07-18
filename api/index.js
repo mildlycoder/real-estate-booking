@@ -2,6 +2,7 @@ const express = require('express');
 const cors = require('cors');
 const mongoose = require('mongoose');
 const User = require('./models/User');
+const Place = require('./models/Place.js')
 const bcrypt = require('bcryptjs');
 const jwt = require('jsonwebtoken')
 const cookieParser = require('cookie-parser')
@@ -99,6 +100,25 @@ app.post('/upload',photosMiddleware.array('photos', 50)  ,(req, res) => {
         uploadedFiles.push(newPath.replace('uploads/', ''))
     }
     res.json(uploadedFiles)
+})
+
+app.post('/place', async (req,res) => {
+    const {title, address, addedPhotos, description, perks, checkIn, checkOut, maxCap} = req.body;
+    const {token} = req.cookies;
+    jwt.verify(token, jwtSecret, {}, async (error, userData)=>{
+            const place = await Place.create({
+                owner: userData.id,
+                title, 
+                address,
+                photos:addedPhotos, 
+                desc: description, 
+                perks, 
+                checkIn, 
+                checkOut,
+                maxCap
+            })
+            res.json(place);
+    })
 })
 
 app.listen(4000);

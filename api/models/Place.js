@@ -1,5 +1,4 @@
 const mongoose = require('mongoose')
-const {Schema} = mongoose
 
 const PlaceSchema = new mongoose.Schema({
     owner: {type: mongoose.Schema.Types.ObjectId, ref: 'User'},
@@ -8,11 +7,11 @@ const PlaceSchema = new mongoose.Schema({
     photos: [String],
     desc: String,
     perks: [String],
-    checkIn: Number,
-    checkOut: Number,
-    maxCap: Number,
+    checkIn: String,
+    checkOut: String,
+    maxCap: String,
 })
 
 const PlaceModel = mongoose.model('Place', PlaceSchema)
 
-modules.export = PlaceModel
+module.exports = PlaceModel;
