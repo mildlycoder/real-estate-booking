@@ -1,4 +1,4 @@
-import React, { useContext, useState } from 'react'
+import React, { useContext, useEffect, useState } from 'react'
 import { UserContext } from '../UserContext'
 import { Link, Navigate, redirect, useParams } from 'react-router-dom'
 import axios from 'axios'
@@ -7,6 +7,7 @@ import { Accomodations, Booking } from './account'
 const Account = () => {
     const {user, setUser, ready} = useContext(UserContext)
     const [loggedOut, setLoggedOut] = useState(false)
+
     let {subpage} = useParams()
     if(subpage === undefined){
         subpage = 'profile'

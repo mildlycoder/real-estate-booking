@@ -121,4 +121,12 @@ app.post('/place', async (req,res) => {
     })
 })
 
+app.get('/places', async(req, res) => {
+    const {token} = req.cookies;
+    jwt.verify(token, jwtSecret, {}, async (error, userData)=>{
+        const places = await Place.find({owner: userData.id})
+        res.json(places);    
+    })
+})
+
 app.listen(4000);
