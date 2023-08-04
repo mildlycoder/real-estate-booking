@@ -1,8 +1,12 @@
 import React from 'react'
+import AccountNav from '../../components/AccountNav'
 
 const Booking = () => {
   return (
-    <div>Booking</div>
+    <main>
+      <AccountNav/>
+      bookings
+    </main>
   )
 }
 

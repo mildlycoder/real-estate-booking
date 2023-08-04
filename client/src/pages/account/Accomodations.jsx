@@ -1,10 +1,10 @@
 import React, { useState, useEffect } from 'react'
 import { Link, useParams, Navigate } from 'react-router-dom'
 import axios from 'axios'
-import AccomodationForm from '../../components/AccomodationForm'
+import AccomodationForm from './AccomodationForm'
 const Accomodations = () => {
 
-    const {action} = useParams()
+    const {action, id} = useParams()
     const [accomodations, setAccomodations] = useState([])
 
     useEffect(() =>{
@@ -12,7 +12,7 @@ const Accomodations = () => {
             setAccomodations(data)
         })
     }, [])
-    console.log(accomodations)
+    console.log(action)
    return (
     <section className='p-5'>
         {
@@ -26,16 +26,16 @@ const Accomodations = () => {
                         Add new place
                     </button>
                 </Link>
-                <section className='m-5 p-5 flex flex-col-reverse gap-10 w-[60%]'>
+                <section className='m-5 flex flex-col-reverse gap-10 w-[60%]'>
                     {
                         (accomodations.length > 0)&&
                         accomodations.map(accomodation => (
-                            <Link to={'/account/places/' + accomodation._id} key={accomodation._id}>
+                            <Link to={'/account/accomodations/' + accomodation._id} key={accomodation._id}>
                                 <div  className='p-5 rounded-lg shadow-md  border-[1px] border-gray-300 flex gap-5 cursor-pointer hover:scale-105 transition-all'>
                                     <div className='max-w-[25%]'>
                                         <img src={"http://localhost:4000/uploads/" + accomodation.photos[0]} alt="" className='rounded-lg'/>
                                     </div>
-                                    <div className='flex flex-col gap-5'>
+                                    <div className='flex flex-col gap-2'>
                                         <h1 className='text-2xl'>{accomodation.title}</h1>
                                         <h2 className='text-xl'>{accomodation.address}</h2>
                                         <h3 className='text-xl text-gray-500'>{accomodation.desc}</h3>
@@ -50,6 +50,10 @@ const Accomodations = () => {
         {
             (action === 'new')&&
             <AccomodationForm/>
+        }
+        {
+            (id)&&
+            <AccodmodationsDetails/>
         }
     </section>
   )
