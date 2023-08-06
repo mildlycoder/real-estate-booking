@@ -103,7 +103,7 @@ app.post('/upload',photosMiddleware.array('photos', 50)  ,(req, res) => {
 })
 
 app.post('/place', async (req,res) => {
-    const {title, address, addedPhotos, description, perks, checkIn, checkOut, maxCap} = req.body;
+    const {title, address, addedPhotos, description, perks, checkIn, checkOut, maxCap, price} = req.body;
     const {token} = req.cookies;
     jwt.verify(token, jwtSecret, {}, async (error, userData)=>{
             const place = await Place.create({
@@ -115,7 +115,8 @@ app.post('/place', async (req,res) => {
                 perks, 
                 checkIn, 
                 checkOut,
-                maxCap
+                maxCap, 
+                price
             })
             res.json(place);
     })
@@ -129,14 +130,18 @@ app.get('/places', async(req, res) => {
     })
 })
 
-app.get('/places/:id', async(req, res) => {
+app.get('/get-all-places', async(req, res) => {
+    res.json(await Place.find())
+})
+
+app.get('/place-info/:id', async(req, res) => {
     const {id} = req.params
     res.json(await Place.findById(id))
 })
 
 app.put('/place', async(req, res) => {
     const {token} = req.cookies
-    const {id, title, address, addedPhotos, description, perks, checkIn, checkOut, maxCap} = req.body;
+    const {id, title, address, addedPhotos, description, perks, checkIn, checkOut, maxCap, price} = req.body;
     jwt.verify(token, jwtSecret, {}, async (error, userData)=>{
         const placeDoc =  await Place.findById(id)
         if(userData.id === placeDoc.owner.toString()){
@@ -148,13 +153,13 @@ app.put('/place', async(req, res) => {
                 perks, 
                 checkIn, 
                 checkOut,
-                maxCap
+                maxCap,
+                price
             })
             await placeDoc.save()
             res.json('ok')
         }   
     })
 })
-
 
 app.listen(4000);

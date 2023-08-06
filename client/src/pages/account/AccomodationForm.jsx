@@ -9,7 +9,7 @@ const AccomodationForm = () => {
         if(!id){
             return
         }
-        axios.get('/places/' +id).then(response => {
+        axios.get('/place-info/' +id).then(response => {
             const {data} = response
             console.log(data)
             setTitle(data.title)
@@ -32,6 +32,7 @@ const AccomodationForm = () => {
     const [checkIn, setCheckIn] = useState('')
     const [checkOut, setCheckOut] = useState('')
     const [maxCap, setMaxCap] = useState('')
+    const [price, setPrice] = useState(100)
     const [redirect, setRedirect] = useState(false)
 
     const addPhotosLink = async (e) => {
@@ -90,7 +91,8 @@ const AccomodationForm = () => {
             perks,
             checkIn,
             checkOut,
-            maxCap
+            maxCap,
+            price
         }
         if (id){
             await axios.put('/place', {id, ...placeInfo})
@@ -222,7 +224,7 @@ const AccomodationForm = () => {
             </div>
 
             <h1 className='text-2xl mt-2'>Accomodation details</h1>
-            <div className='grid md:grid-cols-3 gap-10'>
+            <div className='grid md:grid-cols-2 gap-10'>
                 <div>
                     <h1 className='text-2xl text-gray-500'>Check in</h1>
                     <input type="text" className='border-[2px] border-gray-300 p-2 text-lg rounded-l-full rounded-r-full w-full ' placeholder='06:00' 
@@ -242,6 +244,13 @@ const AccomodationForm = () => {
                     <input type="text" className='border-[2px] border-gray-300 p-2 text-lg rounded-l-full rounded-r-full w-full ' placeholder='16:00' 
                     value={maxCap}
                     onChange={e => setMaxCap(e.target.value)}
+                    />
+                </div>
+                <div>
+                    <h1 className='text-2xl text-gray-500'>Price</h1>
+                    <input type="text" className='border-[2px] border-gray-300 p-2 text-lg rounded-l-full rounded-r-full w-full ' placeholder='$100' 
+                    value={price}
+                    onChange={e => setPrice(e.target.value)}
                     />
                 </div>
             </div>

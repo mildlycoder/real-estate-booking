@@ -1,10 +1,10 @@
 import { useState } from 'react'
 import { Route, Routes } from 'react-router-dom'
-import { Home, Login, Register, Account } from './pages'
+import { Home, Login, Register, Account, Place} from './pages'
+import { Accomodations, Booking, AccomodationForm } from './pages/account'
 import Layout from './Layout'
 import axios from 'axios'
 import { UserContext, UserContextProvider } from './UserContext'
-import { Accomodations, Booking, AccomodationForm } from './pages/account'
 
 axios.defaults.baseURL = 'http://localhost:4000/'
 axios.defaults.withCredentials = true;
@@ -23,6 +23,7 @@ function App() {
         <Route path='/account/accomodations' element={<Accomodations/>}/>
         <Route path='/account/accomodations/new' element={<AccomodationForm/>}/>
         <Route path='/account/accomodations/:id' element={<AccomodationForm/>}/>
+        <Route path='/accomodation/:id' element={<Place/>} />
       </Route>
       </Routes>
     </UserContextProvider>
