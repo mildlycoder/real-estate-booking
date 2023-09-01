@@ -1,11 +1,21 @@
 import axios from 'axios'
 import React, { useEffect, useState } from 'react'
-import { useParams } from 'react-router-dom'
+import { Router, useParams, Navigate } from 'react-router-dom'
+import { differenceInDays } from 'date-fns'
 
 const Place = () => {
   const {id} = useParams()
   const [accomodation, setAccomodation] = useState({})
   const [showGallery, setShowGallery] = useState(false)
+  const [redirect, setRedirect] = useState(false)
+
+  const [guests, setGuests] = useState(1)
+  const [checkIn, setCheckIn] = useState(null)
+  const [checkOut, setCheckOut] = useState(null)
+  const [name, setName] = useState("")
+  const [telNum, setTelNum] = useState(null)
+
+
   useEffect(()=>{
     if(!id){
       return;
@@ -15,6 +25,22 @@ const Place = () => {
       setAccomodation(response.data)
     })
   }, [id])
+
+  const book = async (e) => {
+    e.preventDefault()
+    const price = differenceInDays(new Date(checkOut), new Date(checkIn))*accomodation.price
+    const place = accomodation._id
+    try {
+      await axios.post('/booking', {place, checkIn, checkOut, guests, telNum, name, price})
+      setRedirect(true)
+    } catch (error) {
+      console.log(error)
+    }
+  }
+
+  if(redirect){
+    return <Navigate to='/account/bookings'/>
+}
 
   if(showGallery){
     return(
@@ -89,19 +115,34 @@ const Place = () => {
           <h1 className='text-2xl font-semibold'>Price: ${accomodation.price}/per night </h1>
           <div className='grid grid-cols-2 gap-3'>
             <div className='bg-white  p-5 rounded-lg'>
-              <h1 className='text-xl'>Check in</h1><input type="date" name="" id="" />
+              <h1 className='text-xl'>Check in</h1><input value={checkIn} onChange={(e) => setCheckIn(e.target.value)} type="date" name="" id="" />
             </div>
             <div className='bg-white  p-5 rounded-lg'>
-              <h1 className='text-xl'>Check out</h1><input type="date" name="" id="" />
+              <h1 className='text-xl'>Check out</h1><input value={checkOut} onChange={(e) => setCheckOut(e.target.value)} type="date" name="" id="" />
             </div>
           </div>
 
           <div className='bg-white flex gap-3 p-5 rounded-lg'>
-              <h1 className='text-xl '>Guests:</h1><input className='text-xl' placeholder='2' type="number" name="" id="" />
+              <h1 className='text-xl'>Guests:</h1><input value={guests} onChange={(e) => setGuests(e.target.value)} className='text-xl' placeholder='2' min="1" type="number" name="" id="" />
           </div>
 
-          <button className='px-6 py-4 bg-red-500 text-white rounded-l-full rounded-r-full text center'>
+          <div className='bg-white flex gap-3 p-5 rounded-lg'>
+              <h1 className='text-xl'>Full Name:</h1><input value={name} onChange={(e) => setName(e.target.value)} className='text-xl' placeholder='John doe'  type="text" name="" id="" />
+          </div>
+
+          <div className='bg-white flex gap-3 p-5 rounded-lg'>
+              <h1 className='text-xl'>Phone number:</h1><input value={telNum} onChange={(e) => setTelNum(e.target.value)} className='text-xl' placeholder='2' type="tel" name="" id="" />
+          </div>
+
+          <button className='px-6 py-4 bg-red-500 text-white rounded-l-full rounded-r-full text center' onClick={book}>
             Book this
+            {
+              (checkIn) && (checkOut) &&
+              (
+                <span className='font-bold'> for ${(differenceInDays(new Date(checkOut), new Date(checkIn)))*accomodation.price}</span>
+              )
+              
+            }
           </button>
         </div>
       </div>

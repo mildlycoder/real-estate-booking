@@ -3,6 +3,7 @@ const cors = require('cors');
 const mongoose = require('mongoose');
 const User = require('./models/User');
 const Place = require('./models/Place.js')
+const Booking = require('./models/Booking')
 const bcrypt = require('bcryptjs');
 const jwt = require('jsonwebtoken')
 const cookieParser = require('cookie-parser')
@@ -160,6 +161,18 @@ app.put('/place', async(req, res) => {
             res.json('ok')
         }   
     })
+})
+
+app.post('/booking', async(req, res) => {
+    const {place, checkIn, checkOut, guests, name, telNum, price} = req.body;
+    try {
+        await Booking.create({
+            place, checkIn, checkOut, guests, name, telNum, price
+        })
+        return res.json('ok')
+    } catch (error) {
+        return res.json(error)
+    }
 })
 
 app.listen(4000);
