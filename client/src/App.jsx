@@ -6,7 +6,7 @@ import Layout from './Layout'
 import axios from 'axios'
 import { UserContext, UserContextProvider } from './UserContext'
 
-axios.defaults.baseURL = 'http://localhost:4000/'
+axios.defaults.baseURL = imports.meta.env.VITE_API_URL
 axios.defaults.withCredentials = true;
 
 function App() {
