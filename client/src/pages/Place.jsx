@@ -58,7 +58,7 @@ const Place = () => {
         {
           accomodation.photos?.map(photo => (
             <div key={photo}>
-              <img src={"http://localhost:4000/uploads/"+ photo} className='rounded-lg' alt="" srcset="" />
+              <img src={photo} className='rounded-lg' alt="" srcset="" />
             </div>
           ))
         }
@@ -83,11 +83,11 @@ const Place = () => {
       <div className='relative'>
         <div className='grid gap-2 grid-cols-[2fr_1fr] m-10'>
           <div className='flex'>
-            <img onClick={() => setShowGallery(true)} src={"http://localhost:4000/uploads/"+accomodation.photos?.[0]} className='aspect-square object-cover cursor-pointer rounded-l-lg' alt=""/>
+            <img onClick={() => setShowGallery(true)} src={accomodation.photos?.[0]} className='aspect-square object-cover cursor-pointer rounded-l-lg' alt=""/>
           </div>
           <div className='flex flex-col gap-2'>
-            <img onClick={() => setShowGallery(true)} src={"http://localhost:4000/uploads/"+accomodation.photos?.[1]} className='aspect-square object-cover cursor-pointer rounded-tr-lg' alt=""/>
-            <img onClick={() => setShowGallery(true)} src={"http://localhost:4000/uploads/"+accomodation.photos?.[2]} className='aspect-square object-cover cursor-pointer rounded-br-lg' alt=""/>
+            <img onClick={() => setShowGallery(true)} src={accomodation.photos?.[1]} className='aspect-square object-cover cursor-pointer rounded-tr-lg' alt=""/>
+            <img onClick={() => setShowGallery(true)} src={accomodation.photos?.[2]} className='aspect-square object-cover cursor-pointer rounded-br-lg' alt=""/>
           </div>
         </div>
         <div onClick={() => setShowGallery(true)} className='absolute bottom-4 right-14'>
@@ -139,7 +139,7 @@ const Place = () => {
             {
               (checkIn) && (checkOut) &&
               (
-                <span className='font-bold'> for ${(differenceInDays(new Date(checkOut), new Date(checkIn)))*accomodation.price}</span>
+                <span className='font-bold'> for ${((differenceInDays(new Date(checkOut), new Date(checkIn)))*accomodation.price)}</span>
               )
               
             }

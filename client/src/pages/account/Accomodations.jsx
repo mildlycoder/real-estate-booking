@@ -33,7 +33,7 @@ const Accomodations = () => {
                             <Link to={'/account/accomodations/' + accomodation._id} key={accomodation._id}>
                                 <div  className='p-5 rounded-lg shadow-md  border-[1px] border-gray-300 grid grid-cols-3 gap-5 cursor-pointer hover:scale-105 transition-all'>
                                     <div className=''>
-                                        <img src={"http://localhost:4000/uploads/" + accomodation.photos[0]} alt="" className='rounded-lg aspect-square object-cover' />
+                                        <img src={ accomodation.photos[0]} alt="" className='rounded-lg aspect-square object-cover' />
                                     </div>
                                     <div className='flex flex-col col-span-2 gap-2'>
                                         <h1 className='text-2xl'>{accomodation.title}</h1>

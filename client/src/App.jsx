@@ -1,7 +1,7 @@
 import { useState } from 'react'
 import { Route, Routes } from 'react-router-dom'
 import { Home, Login, Register, Account, Place} from './pages'
-import { Accomodations, Booking, AccomodationForm } from './pages/account'
+import { Accomodations, Booking, AccomodationForm, BookingPlace } from './pages/account'
 import Layout from './Layout'
 import axios from 'axios'
 import { UserContext, UserContextProvider } from './UserContext'
@@ -20,10 +20,12 @@ function App() {
         <Route path='/register' element={<Register/>}/>
         <Route path='/account' element={<Account/>}/>
         <Route path='/account/bookings' element={<Booking/>}/>
+        <Route path='/account/bookings/:id' element={<BookingPlace/>}/>
         <Route path='/account/accomodations' element={<Accomodations/>}/>
         <Route path='/account/accomodations/new' element={<AccomodationForm/>}/>
         <Route path='/account/accomodations/:id' element={<AccomodationForm/>}/>
         <Route path='/accomodation/:id' element={<Place/>} />
+
       </Route>
       </Routes>
     </UserContextProvider>

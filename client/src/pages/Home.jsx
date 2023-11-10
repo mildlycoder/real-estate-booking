@@ -17,7 +17,7 @@ const Home = () => {
         accomodations.map(accomodation => (
           <Link to={'/accomodation/' + accomodation._id} key={accomodation._id} className='p-6 rounded-lg border-gray-300 cursor-pointer hover:scale-105 transition-all flex flex-col gap-4'> 
             <div className='bg-gray-200 rounded-lg flex'>
-              <img src={"http://localhost:4000/uploads/" + accomodation.photos?.[0]} className='object-cover aspect-square rounded-lg' alt="" />
+              <img src={ accomodation.photos?.[0]} className='object-cover aspect-square rounded-lg' alt="" />
             </div>
             <div>
               <h1 className='text-2xl' >{accomodation.title}</h1>

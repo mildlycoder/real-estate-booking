@@ -6,12 +6,15 @@ const AccountNav = () => {
         if(type === subpage){
             classes += 'bg-red-500 text-white'
         }
+
         return classes
     }
     let {subpage} = useParams()
     if(subpage === undefined){
         subpage = 'profile'
     }
+
+    
   return (
     <nav className='flex gap-5 justify-center'>
             <Link to='/account' className={linkClasses('profile')}>
